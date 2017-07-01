@@ -27,4 +27,10 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
+
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    //    轮播器
+    compile 'com.bigkoo:convenientbanner:2.0.5'
+    //图片加载框架
+    compile 'com.github.bumptech.glide:glide:3.7.0'
 }
