@@ -17,13 +17,14 @@ import android.widget.Toast;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
+import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnItemClickListener{
 
     ConvenientBanner mBanner;
 
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         View header = LayoutInflater.from(this).inflate(R.layout.rv_header_banner, null);
         mBanner = (ConvenientBanner) header.findViewById(R.id.banner);
+        //设置高度是屏幕1/4
         mBanner.setLayoutParams(new RecyclerView.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, getWindowManager().getDefaultDisplay().getHeight()/3));
 
@@ -84,10 +86,7 @@ public class MainActivity extends AppCompatActivity {
         myAdapter.addDatas(mData);
 
         myAdapter.setmHeaderView(mBanner);
-        //addHeader(mRecyclerView);
-
         mRecyclerView.setAdapter(myAdapter);
-
 
         myAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
             @Override
@@ -96,16 +95,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-
-    /**
-     * 给 rv 添加头部 banner
-     * @param rv
-     */
-    private void addHeader(RecyclerView rv){
-        View header = LayoutInflater.from(this).inflate(R.layout.rv_header_banner, rv, false);
-        myAdapter.setmHeaderView(header);
     }
 
 
@@ -120,9 +109,16 @@ public class MainActivity extends AppCompatActivity {
         }, networkImage)
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT)
                 .setPageIndicator(new int[] { R.drawable.indicator_gray, R.drawable.indicator_red })
+                .setOnItemClickListener(this)
                 .setScrollDuration(1500);
 
     }
+
+    @Override
+    public void onItemClick(int position) {
+        Toast.makeText(MainActivity.this, "Banner:"+position, Toast.LENGTH_SHORT).show();
+    }
+
 
 //    public class LocalImageHolderView implements Holder<Integer>{
 //
@@ -161,23 +157,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public class Banner {
-        public String getImgUrl() {
-            return imgUrl;
-        }
-
-        public void setImgUrl(String imgUrl) {
-            this.imgUrl = imgUrl;
-        }
-
-        //banner图片的url
-        private String imgUrl;
-
-
-        public Banner( String image) {
-            this.imgUrl = image;
-        }
-
-    }
 
 }
